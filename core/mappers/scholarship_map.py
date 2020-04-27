@@ -1,12 +1,10 @@
-[' Bachelors' ' HS-grad' ' 11th' ' Masters' ' 9th' ' Some-college'
- ' Assoc-acdm' '' ' 7th-8th' ' Doctorate' ' Prof-school'
- ' 5th-6th' ' 10th' ' 1st-4th' ' Preschool' ' 12th']
+import logging
+
 
 SCHOLARSHIP_NAME = {
     ' Doctorate': 'Doctorate',
     ' Masters': 'Master',
     ' Bachelors': 'Bachelors',
-    ' Assoc-acdm': 'High School',
     ' Some-college': 'High School',
     ' HS-grad': 'High School',
     ' 12th': 'High School',
@@ -17,7 +15,9 @@ SCHOLARSHIP_NAME = {
     ' 5th-6th': 'Elementary School',
     ' 1st-4th': 'Elementary School',
     ' Preschool': 'Preschool',
-    ' Prof-school': None
+    ' Prof-school': None,
+    ' Assoc-acdm': None,
+    ' Assoc-voc': None
 }
 
 SCHOLARSHIP_TAG = {
@@ -27,5 +27,29 @@ SCHOLARSHIP_TAG = {
     'High School': 3,
     'Elementary School': 4,
     'Preschool': 5,
-    None: -1
+    None: 'NaN'
 }
+
+def string_to_tag(value):
+    """Maps a value from a string in the dataframe to a number"""
+    logger = logging.getLogger("core")
+
+    # logger.debug("Mapping %s", value)
+    try:
+        res = SCHOLARSHIP_TAG[SCHOLARSHIP_NAME[value]]
+        # logger.debug("Mapped value: %s", res)
+        return res
+    except KeyError as err:
+        logger.error(err)
+
+def tag_to_string(value):
+    """Maps a number to a string"""
+    logger = logging.getLogger("core")
+    logger.trace("Mapping value %s", value)
+    try:
+        # Ugly reversal :(
+        res = list(SCHOLARSHIP_TAG.keys())[list(SCHOLARSHIP_TAG.values()).index(value)]
+        logger.trace("Mapped value %s", res)
+        return res
+    except KeyError as err:
+        logger.error(err)
