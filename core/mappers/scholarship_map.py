@@ -1,34 +1,34 @@
 import logging
 
 
-SCHOLARSHIP_NAME = {
-    ' Doctorate': 'Doctorate',
-    ' Masters': 'Master',
-    ' Bachelors': 'Bachelors',
-    ' Some-college': 'High School',
-    ' HS-grad': 'High School',
-    ' 12th': 'High School',
-    ' 11th': 'High School',
-    ' 10th': 'High School',
-    ' 9th': 'High School',
-    ' 7th-8th': 'Elementary School',
-    ' 5th-6th': 'Elementary School',
-    ' 1st-4th': 'Elementary School',
-    ' Preschool': 'Preschool',
-    ' Prof-school': None,
-    ' Assoc-acdm': None,
-    ' Assoc-voc': None
+SCHOLARSHIP_MAP = {
+    ' Doctorate': 0,
+    ' Masters': 1,
+    ' Bachelors': 2,
+    ' Some-college': 3,
+    ' HS-grad': 3,
+    ' 12th': 3,
+    ' 11th': 3,
+    ' 10th': 3,
+    ' 9th': 3,
+    ' 7th-8th': 4,
+    ' 5th-6th': 4,
+    ' 1st-4th': 4,
+    ' Preschool': 5,
+    ' Prof-school': 6,
+    ' Assoc-acdm': 6,
+    ' Assoc-voc': 6
 }
 
-SCHOLARSHIP_TAG = {
-    'Doctorate': 0,
-    'Master': 1,
-    'Bachelors': 2,
-    'High School': 3,
-    'Elementary School': 4,
-    'Preschool': 5,
-    None: 'NaN'
-}
+SCHOLARSHIP_TAG = [
+    ('Doctorate', 0),
+    ('Master', 1),
+    ('Bachelors', 2),
+    ('High School', 3),
+    ('Elementary School', 4),
+    ('Preschool', 5),
+    (None, None)
+]
 
 def string_to_tag(value):
     """Maps a value from a string in the dataframe to a number"""
@@ -36,7 +36,7 @@ def string_to_tag(value):
 
     # logger.debug("Mapping %s", value)
     try:
-        res = SCHOLARSHIP_TAG[SCHOLARSHIP_NAME[value]]
+        res = SCHOLARSHIP_TAG[SCHOLARSHIP_MAP[value]][1]
         # logger.debug("Mapped value: %s", res)
         return res
     except KeyError as err:
@@ -48,8 +48,9 @@ def tag_to_string(value):
     logger.trace("Mapping value %s", value)
     try:
         # Ugly reversal :(
-        res = list(SCHOLARSHIP_TAG.keys())[list(SCHOLARSHIP_TAG.values()).index(value)]
+        res = SCHOLARSHIP_TAG[value][0]
         logger.trace("Mapped value %s", res)
         return res
     except KeyError as err:
         logger.error(err)
+        
