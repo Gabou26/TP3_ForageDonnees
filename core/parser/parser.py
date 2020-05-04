@@ -7,7 +7,6 @@ from core.mappers.marital_map import string_to_tag as marital
 from core.mappers.job_details_map import string_to_tag as details
 from core.mappers.country_map import string_to_tag as countries
 
-from core.commons.point import Point
 
 def parse_data(data_frame):
     """Used to filter the data before returning the data frame
@@ -16,13 +15,7 @@ def parse_data(data_frame):
     logger = logging.getLogger("core")
     logger.info("Parsing data")
 
-    frame = _map_data(data_frame, logger)
-
-    for data in frame:
-        for row in frame[data]:
-            logger.debug(row)
-
-    return data
+    return _map_data(data_frame, logger)
 
 def _map_data(data_frame, logger):
     """
