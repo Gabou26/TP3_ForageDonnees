@@ -26,7 +26,5 @@ class Main:
     def start(self):
         """Starts the application"""
         self.data_frame = loader.load_file()
-        self._debug_dataframe()
         self.data_frame = parser.parse_data(self.data_frame)
-        self._debug_dataframe()
         self.logger.info("Finished processing")

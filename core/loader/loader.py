@@ -13,4 +13,4 @@ def load_file():
         logger.info("Loaded data")
         return data_frame
     except FileNotFoundError as err:
-        print(err)
+        logger.error(err)
